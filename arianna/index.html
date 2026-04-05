@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>АРИАННА — Надёжный партнёр в сопровождении бизнеса</title>
+
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #fafafa;
+      --mid: #555;
+      --light: #e8e8e8;
+      --lighter: #f2f2f2;
+      --max: 1240px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(var(--max), 100% - 48px);
+      margin-inline: auto;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--light);
+      background: rgba(250,250,250,0.94);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      gap: 32px;
+    }
+
+    .logo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links a {
+      color: var(--mid);
+      transition: color 0.2s;
+      font-weight: 400;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    .nav-cta {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 10px 20px;
+      border: 1.5px solid var(--black);
+      background: var(--black);
+      color: var(--white);
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: transparent; color: var(--black); }
+
+    /* ── HERO ── */
+    .hero {
+      border-bottom: 1px solid var(--light);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      min-height: 86vh;
+    }
+
+    .hero-left {
+      padding: 72px 56px 72px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--light);
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--mid);
+    }
+
+    h1 {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(38px, 5vw, 68px);
+      font-weight: 900;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      margin-top: 28px;
+      max-width: 14ch;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--mid);
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 46ch;
+      margin-top: 24px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      gap: 14px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 16px 28px;
+      background: var(--black);
+      color: var(--white);
+      border: 1.5px solid var(--black);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-primary:hover { background: transparent; color: var(--black); }
+
+    .btn-ghost {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 16px 28px;
+      background: transparent;
+      color: var(--black);
+      border: 1.5px solid var(--black);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { background: var(--black); color: var(--white); }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 56px;
+      padding-top: 32px;
+      border-top: 1px solid var(--light);
+    }
+
+    .stat-item {}
+    .stat-num {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--mid);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    .hero-right {
+      background: var(--black);
+      color: var(--white);
+      padding: 56px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-right-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      font-weight: 400;
+    }
+
+    .hero-right-big {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(32px, 4.5vw, 56px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      word-break: keep-all;
+      white-space: nowrap;
+    }
+
+    .hero-right-tagline {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 24px;
+    }
+
+    /* ── TICKER ── */
+    .ticker-bar {
+      overflow: hidden;
+      border-bottom: 1px solid var(--light);
+      background: var(--lighter);
+      padding: 14px 0;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      animation: ticker 24s linear infinite;
+    }
+
+    .ticker-item {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      white-space: nowrap;
+      padding: 0 40px;
+      font-weight: 400;
+    }
+
+    .ticker-sep {
+      color: var(--light);
+      padding: 0 4px;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 88px 0; border-bottom: 1px solid var(--light); }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--mid);
+    }
+
+    h2 {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+
+    h3 {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    /* ── BENEFITS ── */
+    .benefits-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 1px;
+      background: var(--light);
+    }
+
+    .benefits-intro {
+      background: var(--white);
+      padding: 40px 40px 40px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .benefits-intro p {
+      color: var(--mid);
+      font-size: 15px;
+      line-height: 1.65;
+      margin-top: 20px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--light);
+    }
+
+    .benefit-card {
+      background: var(--white);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .benefit-num {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--mid);
+      letter-spacing: 0.1em;
+    }
+
+    .benefit-card h3 { font-size: 21px; }
+
+    .benefit-card p {
+      font-size: 17px;
+      color: var(--mid);
+      line-height: 1.6;
+    }
+
+    /* ── ABOUT / STATS ── */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--light);
+    }
+
+    .about-main {
+      background: var(--black);
+      color: var(--white);
+      padding: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 400px;
+    }
+
+    .about-years {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(80px, 12vw, 140px);
+      font-weight: 900;
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+    }
+
+    .about-years span {
+      font-size: 0.45em;
+      vertical-align: super;
+      letter-spacing: 0;
+    }
+
+    .about-main p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      max-width: 38ch;
+    }
+
+    .about-right {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--light);
+    }
+
+    .about-card {
+      background: var(--white);
+      padding: 32px 28px;
+    }
+
+    .about-card h3 { font-size: 21px; margin-bottom: 10px; }
+    .about-card p { font-size: 17px; color: var(--mid); line-height: 1.6; }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      background: transparent;
+      margin-top: 48px;
+      border: 1px solid var(--light);
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-right: 1px solid var(--light);
+      align-self: start;
+    }
+
+    .service-card:last-child { border-right: none; }
+
+    .service-card:hover { background: var(--lighter); }
+
+    .service-list { flex: 1; }
+
+    .service-dir {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+
+    .service-card h3 {
+      font-size: 22px;
+      margin-bottom: 28px;
+      line-height: 1.25;
+    }
+
+    .service-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      flex: 1;
+    }
+
+    .service-list li {
+      font-size: 17px;
+      color: var(--mid);
+      padding: 12px 0;
+      border-top: 1px solid var(--light);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .service-list li::before {
+      content: '—';
+      color: var(--light);
+      flex-shrink: 0;
+    }
+
+    .service-more {
+      margin-top: auto;
+      padding-top: 28px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--black);
+    }
+
+    .service-more::after {
+      content: '→';
+      transition: transform 0.2s;
+    }
+
+    .service-card:hover .service-more::after { transform: translateX(4px); }
+
+    /* ── RESULTS ── */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--light);
+      margin-top: 48px;
+    }
+
+    .result-card {
+      background: var(--white);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .result-num {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--mid);
+    }
+
+    .result-card h3 { font-size: 22px; line-height: 1.25; }
+    .result-card p { font-size: 17px; color: var(--mid); line-height: 1.6; margin-top: auto; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--black);
+      color: var(--white);
+      border-bottom: none;
+    }
+
+    .cta-inner {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 0;
+      min-height: 320px;
+    }
+
+    .cta-left {
+      padding: 72px 56px 72px 0;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cta-left h2 {
+      color: var(--white);
+      max-width: 16ch;
+    }
+
+    .cta-tagline {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+      max-width: 44ch;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 14px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .btn-white {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 16px 28px;
+      background: var(--white);
+      color: var(--black);
+      border: 1.5px solid var(--white);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-white:hover { background: transparent; color: var(--white); }
+
+    .btn-outline-white {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 16px 28px;
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .btn-outline-white:hover { border-color: var(--white); }
+
+    .cta-right {
+      padding: 56px 0 56px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .contact-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      font-weight: 400;
+    }
+
+    .contact-email {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--white);
+    }
+
+    .contact-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .contact-form-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--light);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--mid);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      font-size: 12px;
+      color: var(--mid);
+    }
+    .footer-links a:hover { color: var(--black); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { padding: 48px 32px; min-height: 280px; }
+      .hero-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); padding: 56px 0; }
+
+      .benefits-layout { grid-template-columns: 1fr; }
+      .benefits-intro { padding: 32px 0 32px 0; }
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .about-layout { grid-template-columns: 1fr; }
+
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+
+      .cta-inner { grid-template-columns: 1fr; }
+      .cta-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 56px 0; }
+      .cta-right { padding: 48px 0 0; }
+    }
+
+    @media (max-width: 680px) {
+      .wrap { width: calc(100% - 32px); }
+      .nav-links { display: none; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .results-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 24px; }
+      .about-right { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-links { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="wrap nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">А</div>
+        АРИАННА
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">О компании</a></li>
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="pricer.html">Прейскурант</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Оставить заявку</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="hero-tag">Аутсорсинг бэк-офиса</div>
+          <h1>Ваш надёжный партнёр в&nbsp;сопровождении бизнеса</h1>
+          <p class="hero-sub">
+            Бухгалтерия, налоги, кадры и правовая поддержка — в одном месте. Для компаний, которым нужны порядок, контроль и спокойствие.
+          </p>
+          <div class="hero-cta-row">
+            <a href="#contact" class="btn-primary">Оставить заявку</a>
+            <a href="#services" class="btn-ghost">Наши услуги</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-num">20+</div>
+              <div class="stat-label">лет на рынке</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">40%</div>
+              <div class="stat-label">экономия на бэк-офисе</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">3</div>
+              <div class="stat-label">экспертизы в одной команде</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-right-label">Точность. Своевременность. Соответствие закону.</div>
+          <div class="hero-right-big">АРИАННА</div>
+          <p class="hero-right-tagline">Мы обеспечиваем точность, своевременность и полное соответствие требованиям законодательства</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker-bar" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Бухгалтерский учёт</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Налоговый учёт</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Кадровый документооборот</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Правовая защита</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Юридическое сопровождение</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Оптимизация налогов</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Воинский учёт</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Аналитика персонала</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Бухгалтерский учёт</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Налоговый учёт</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Кадровый документооборот</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Правовая защита</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Юридическое сопровождение</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Оптимизация налогов</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Воинский учёт</span>
+      <span class="ticker-item">·</span>
+      <span class="ticker-item">Аналитика персонала</span>
+      <span class="ticker-item">·</span>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- BENEFITS -->
+    <section id="benefits">
+      <div class="wrap">
+        <div class="benefits-layout">
+          <div class="benefits-intro">
+            <div class="section-label">Преимущества</div>
+            <h2>5 причин выбрать аутсорсинг</h2>
+            <p>Передайте рутину профессионалам — и сосредоточьтесь на развитии компании.</p>
+          </div>
+          <div class="benefits-grid">
+            <article class="benefit-card">
+              <div class="benefit-num">01</div>
+              <h3>Эксперты высокого уровня</h3>
+              <p>Доступ к профильной команде без найма штатного отдела.</p>
+            </article>
+            <article class="benefit-card">
+              <div class="benefit-num">02</div>
+              <h3>Масштабирование под задачи</h3>
+              <p>Разовые услуги или полный комплекс сопровождения.</p>
+            </article>
+            <article class="benefit-card">
+              <div class="benefit-num">03</div>
+              <h3>Надёжность и безопасность</h3>
+              <p>NDA, облачные сервисы, чёткая защита данных.</p>
+            </article>
+            <article class="benefit-card">
+              <div class="benefit-num">04</div>
+              <h3>Экономия до 40%</h3>
+              <p>Снижение затрат на содержание бэк-офиса.</p>
+            </article>
+            <article class="benefit-card">
+              <div class="benefit-num">05</div>
+              <h3>Страховка от штрафов</h3>
+              <p>Ошибки и санкции — наша ответственность, а не ваша.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="wrap">
+        <div class="section-label">О компании</div>
+        <h2 style="margin-bottom: 48px;">20+ лет опыта: команда, которая знает всё</h2>
+        <div class="about-layout">
+          <div class="about-main">
+            <div>
+              <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:20px;font-weight:400;">Лет на рынке</div>
+              <div class="about-years">20<span>+</span></div>
+            </div>
+            <p>Команда единомышленников с синергией трёх экспертиз: бухгалтерия, юриспруденция и кадры — в одной связке, без разрыва ответственности.</p>
+          </div>
+          <div class="about-right">
+            <article class="about-card">
+              <h3>Опыт во всех сферах</h3>
+              <p>IT, НКО, госзаказы, PR, реклама — от стартапов до среднего бизнеса.</p>
+            </article>
+            <article class="about-card">
+              <h3>Защита на максимум</h3>
+              <p>NDA, облачные сервисы, безопасная работа с документами клиентов.</p>
+            </article>
+            <article class="about-card">
+              <h3>Репутация в деле</h3>
+              <p>Миллионы документов, тысячи сделок, сотни проверок — одна репутация.</p>
+            </article>
+            <article class="about-card">
+              <h3>Единая ответственность</h3>
+              <p>Один контакт, один результат, понятная зона ответственности.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="wrap">
+        <div class="section-label">Направления</div>
+        <h2>Полный спектр бизнес-сопровождения</h2>
+        <div class="services-grid">
+          <a href="service-accounting-3.html" style="text-decoration:none;color:inherit;"><article class="service-card">
+            <div class="service-dir">Направление 01</div>
+            <h3>Учёт и налоги — полный контроль</h3>
+            <ul class="service-list">
+              <li>Бухгалтерский и налоговый учёт</li>
+              <li>Расчёт зарплаты и налогов</li>
+              <li>Отчётность в ФНС, ПФР, Росстат</li>
+              <li>Сопровождение проверок</li>
+              <li>Оптимизация налоговой нагрузки по закону</li>
+            </ul>
+            <div class="service-more">Подробнее об услуге</div>
+          </article></a>
+
+          <a href="service-hr.html" style="text-decoration:none;color:inherit;"><article class="service-card">
+            <div class="service-dir">Направление 02</div>
+            <h3>Кадры и аналитика персонала</h3>
+            <ul class="service-list">
+              <li>Кадровый документооборот</li>
+              <li>Приём, увольнение, переводы, больничные</li>
+              <li>Отчёты в ПФР и ФСС</li>
+              <li>Управленческая аналитика по команде</li>
+              <li>Воинский учёт по требованиям закона</li>
+            </ul>
+            <div class="service-more">Подробнее об услуге</div>
+          </article></a>
+
+          <a href="service-legal.html" style="text-decoration:none;color:inherit;"><article class="service-card">
+            <div class="service-dir">Направление 03</div>
+            <h3>Правовая защита: полное спокойствие</h3>
+            <ul class="service-list">
+              <li>Юридическое сопровождение тендеров</li>
+              <li>Договорная работа и корпоративное право</li>
+              <li>Претензионная работа и судебная защита</li>
+              <li>Взаимодействие с государственными органами</li>
+              <li>Участие в переговорах как правовой консультант</li>
+            </ul>
+            <div class="service-more">Подробнее об услуге</div>
+          </article></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="results">
+      <div class="wrap">
+        <div class="section-label">Результаты</div>
+        <h2>Что получает ваша компания</h2>
+        <div class="results-grid">
+          <article class="result-card">
+            <div class="result-num">01</div>
+            <h3>Гибкий формат сотрудничества</h3>
+            <p>Разовые задачи или полный комплекс сопровождения бизнеса.</p>
+          </article>
+          <article class="result-card">
+            <div class="result-num">02</div>
+            <h3>Единая цепочка ответственности</h3>
+            <p>Один контакт, один результат и понятная зона ответственности.</p>
+          </article>
+          <article class="result-card">
+            <div class="result-num">03</div>
+            <h3>Система и порядок</h3>
+            <p>Документооборот и процессы, которые работают как часы.</p>
+          </article>
+          <article class="result-card">
+            <div class="result-num">04</div>
+            <h3>Экономия 20+ часов в месяц</h3>
+            <p>Время на развитие бизнеса вместо операционной рутины.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="cta-section">
+      <div class="wrap">
+        <div class="cta-inner">
+          <div class="cta-left">
+            <div>
+              <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:32px;font-weight:400;display:flex;align-items:center;gap:10px;"><span style="display:inline-block;width:24px;height:1px;background:rgba(255,255,255,0.25);"></span>Начать сотрудничество</div>
+              <h2>Возьмём сопровождение бизнеса на себя</h2>
+            </div>
+            <p class="cta-tagline">Вы развиваете компанию — мы обеспечиваем точность, своевременность и соответствие требованиям законодательства.</p>
+            <div class="cta-buttons">
+              <a href="mailto:info@arianna.ru" class="btn-white">Написать на почту</a>
+              <a href="#services" class="btn-outline-white">Смотреть услуги</a>
+            </div>
+          </div>
+          <div class="cta-right">
+            <div>
+              <div class="contact-label">Электронная почта</div>
+              <div class="contact-email" style="margin-top:8px;">info@arianna.ru</div>
+            </div>
+            <div class="contact-divider"></div>
+            <div>
+              <div class="contact-label">Форма обратной связи</div>
+              <p class="contact-form-note" style="margin-top:8px;">Укажите имя, компанию, контакт и задачу — ответим в течение рабочего дня.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-logo">АРИАННА</div>
+      <div class="footer-note">© 2026 АРИАННА. Надёжный партнёр в сопровождении бизнеса</div>
+      <div class="footer-links">
+        <a href="#">П�

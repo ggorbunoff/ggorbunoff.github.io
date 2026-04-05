@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>АРИАННА — Правовая защита</title>
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #fafafa;
+      --mid: #555;
+      --light: #e8e8e8;
+      --lighter: #f2f2f2;
+      --max: 1240px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: Arial, Helvetica, sans-serif; font-weight: 400; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), 100% - 48px); margin-inline: auto; }
+
+    /* ── NAV ── */
+    nav { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--light); background: rgba(250,250,250,0.94); backdrop-filter: blur(12px); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; gap: 32px; }
+    .logo { font-size: 18px; font-weight: 900; letter-spacing: 0.12em; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 32px; height: 32px; border: 2px solid var(--black); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; flex-shrink: 0; }
+    .nav-links { display: flex; gap: 32px; list-style: none; font-size: 13px; }
+    .nav-links a { color: var(--mid); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--black); }
+    .nav-links a.active { color: var(--black); font-weight: 700; }
+    .nav-cta { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 10px 20px; border: 1.5px solid var(--black); background: var(--black); color: var(--white); transition: background 0.2s, color 0.2s; white-space: nowrap; }
+    .nav-cta:hover { background: transparent; color: var(--black); }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb { padding: 14px 0; border-bottom: 1px solid var(--light); }
+    .breadcrumb-inner { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--mid); }
+    .breadcrumb-inner a:hover { color: var(--black); }
+    .breadcrumb-sep { color: var(--light); }
+    .breadcrumb-current { color: var(--black); }
+
+    /* ── HERO ── */
+    .hero { border-bottom: 1px solid var(--light); overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 360px; min-height: 68vh; }
+    .hero-left { padding: 64px 56px 64px 0; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--light); }
+    .hero-tag { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); display: flex; align-items: center; gap: 10px; }
+    .hero-tag::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--mid); }
+    h1 { font-size: clamp(32px, 4.2vw, 58px); font-weight: 900; line-height: 1.02; letter-spacing: -0.02em; margin-top: 24px; max-width: 16ch; }
+    .hero-sub { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 50ch; margin-top: 20px; }
+    .hero-cta-row { display: flex; gap: 14px; margin-top: 40px; flex-wrap: wrap; }
+    .btn-primary { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 16px 28px; background: var(--black); color: var(--white); border: 1.5px solid var(--black); cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-block; }
+    .btn-primary:hover { background: transparent; color: var(--black); }
+    .btn-ghost { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 16px 28px; background: transparent; color: var(--black); border: 1.5px solid var(--black); cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-block; }
+    .btn-ghost:hover { background: var(--black); color: var(--white); }
+    .hero-stats { display: flex; gap: 40px; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--light); }
+    .stat-num { font-size: 30px; font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
+    .stat-label { font-size: 12px; color: var(--mid); margin-top: 5px; }
+
+    .hero-right { background: var(--black); color: var(--white); padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; }
+    .hero-right-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero-right-list { list-style: none; flex: 1; margin-top: 28px; }
+    .hero-right-list li { font-size: 16px; color: rgba(255,255,255,0.75); padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; }
+    .hero-right-list li:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+    .hero-right-list li::before { content: ''; display: inline-block; width: 6px; height: 6px; border: 1.5px solid rgba(255,255,255,0.3); flex-shrink: 0; }
+    .hero-right-tagline { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.35); padding-top: 24px; margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
+
+    /* ── SHARED SECTIONS ── */
+    section { padding: 80px 0; border-bottom: 1px solid var(--light); }
+    .section-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); display: flex; align-items: center; gap: 10px; margin-bottom: 40px; }
+    .section-label::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--mid); }
+    h2 { font-size: clamp(26px, 3vw, 44px); font-weight: 900; letter-spacing: -0.02em; line-height: 1.05; }
+    h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; }
+
+    /* ── SERVICES DETAIL ── */
+    .services-section .section-head { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: end; margin-bottom: 48px; }
+    .services-section .section-head p { font-size: 17px; color: var(--mid); line-height: 1.6; }
+
+    .service-items { display: flex; flex-direction: column; gap: 1px; background: var(--light); }
+    .service-item { background: var(--white); display: grid; grid-template-columns: 56px 1fr 1fr 64px; gap: 0; transition: background 0.15s; }
+    .service-item:hover { background: var(--lighter); }
+    .service-item-num { font-size: 12px; font-weight: 700; color: var(--mid); letter-spacing: 0.08em; padding: 40px 0 40px 32px; border-right: 1px solid var(--light); }
+    .service-item-main { padding: 40px 48px 40px 40px; border-right: 1px solid var(--light); }
+    .service-item-main h3 { font-size: 20px; margin-bottom: 12px; }
+    .service-item-main p { font-size: 16px; color: var(--mid); line-height: 1.65; max-width: 46ch; }
+    .service-item-includes { padding: 40px; border-right: 1px solid var(--light); }
+    .service-item-includes-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); margin-bottom: 16px; }
+    .service-item-includes ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .service-item-includes ul li { font-size: 15px; color: var(--mid); display: flex; align-items: flex-start; gap: 10px; line-height: 1.45; }
+    .service-item-includes ul li::before { content: '—'; color: var(--light); flex-shrink: 0; }
+    .service-item-arrow { display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--light); font-size: 20px; transition: color 0.15s, transform 0.15s; border: none; background: none; width: 100%; height: 100%; min-height: 80px; }
+    .service-item:hover .service-item-arrow { color: var(--black); transform: translateX(3px); }
+
+    /* ── RESULTS ── */
+    .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--light); margin-top: 48px; }
+    .result-card { background: var(--white); padding: 36px 28px; display: flex; flex-direction: column; gap: 14px; }
+    .result-num { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--mid); }
+    .result-card h3 { font-size: 20px; line-height: 1.2; }
+    .result-card p { font-size: 16px; color: var(--mid); line-height: 1.6; margin-top: auto; }
+
+    /* ── STEPS ── */
+    .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--light); margin-top: 48px; }
+    .step-card { background: var(--white); padding: 36px 28px; display: flex; flex-direction: column; gap: 16px; }
+    .step-num { font-size: 40px; font-weight: 900; color: var(--light); line-height: 1; letter-spacing: -0.02em; }
+    .step-card h3 { font-size: 18px; }
+    .step-card p { font-size: 16px; color: var(--mid); line-height: 1.6; }
+
+    /* ── PRICER BANNER ── */
+    .pricer-banner { background: var(--lighter); border: 1px solid var(--light); padding: 48px 56px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    .pricer-banner-left h3 { font-size: 26px; margin-bottom: 12px; }
+    .pricer-banner-left p { font-size: 17px; color: var(--mid); max-width: 52ch; line-height: 1.6; }
+
+    /* ── MODAL ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1000; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--white); width: 100%; max-width: 520px; padding: 48px; position: relative; }
+    .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; font-size: 22px; color: var(--mid); line-height: 1; padding: 4px 8px; }
+    .modal-close:hover { color: var(--black); }
+    .modal-tag { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .modal-tag::before { content: ''; display: inline-block; width: 18px; height: 1px; background: var(--mid); }
+    .modal-title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 28px; }
+    .modal-divider { height: 1px; background: var(--light); margin-bottom: 28px; }
+    .modal-fields { display: flex; flex-direction: column; gap: 12px; }
+    .modal-field { background: var(--lighter); border: 1px solid var(--light); padding: 13px 16px; font-size: 15px; color: var(--black); font-family: Arial, Helvetica, sans-serif; outline: none; transition: border-color 0.2s; width: 100%; }
+    .modal-field::placeholder { color: var(--mid); }
+    .modal-field:focus { border-color: var(--black); }
+    .modal-submit { margin-top: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 16px 28px; background: var(--black); color: var(--white); border: 1.5px solid var(--black); cursor: pointer; transition: background 0.2s, color 0.2s; font-family: Arial, Helvetica, sans-serif; align-self: flex-start; }
+    .modal-submit:hover { background: transparent; color: var(--black); }
+    .modal-note { font-size: 13px; color: var(--mid); margin-top: 14px; line-height: 1.5; }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--black); color: var(--white); border-bottom: none; }
+    .cta-inner { display: grid; grid-template-columns: 1fr 380px; gap: 0; }
+    .cta-left { padding: 64px 56px 64px 0; border-right: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; justify-content: space-between; }
+    .cta-left h2 { color: var(--white); max-width: 18ch; }
+    .cta-tagline { font-size: 17px; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 44ch; margin-top: 20px; }
+    .cta-buttons { display: flex; gap: 14px; margin-top: 40px; flex-wrap: wrap; }
+    .btn-white { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 16px 28px; background: var(--white); color: var(--black); border: 1.5px solid var(--white); cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-block; }
+    .btn-white:hover { background: transparent; color: var(--white); }
+    .btn-outline-white { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 16px 28px; background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.4); cursor: pointer; transition: border-color 0.2s; display: inline-block; }
+    .btn-outline-white:hover { border-color: var(--white); }
+    .cta-right { padding: 64px 0 64px 56px; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+    .contact-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+    .contact-email { font-size: 16px; font-weight: 700; color: var(--white); }
+    .contact-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.1); }
+    .contact-form-fields { display: flex; flex-direction: column; gap: 12px; }
+    .form-field { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); padding: 13px 16px; font-size: 15px; color: var(--white); font-family: Arial, Helvetica, sans-serif; outline: none; transition: border-color 0.2s; width: 100%; }
+    .form-field::placeholder { color: rgba(255,255,255,0.3); }
+    .form-field:focus { border-color: rgba(255,255,255,0.5); }
+    .form-submit { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 14px 24px; background: var(--white); color: var(--black); border: none; cursor: pointer; transition: opacity 0.2s; align-self: flex-start; font-family: Arial, Helvetica, sans-serif; }
+    .form-submit:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer { padding: 28px 0; border-top: 1px solid var(--light); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 0.1em; }
+    .footer-note { font-size: 12px; color: var(--mid); }
+    .footer-links { display: flex; gap: 24px; font-size: 12px; color: var(--mid); }
+    .footer-links a:hover { color: var(--black); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { border-right: none; border-bottom: 1px solid var(--light); padding: 48px 0; }
+      .hero-right { min-height: 280px; }
+      .service-item { grid-template-columns: 48px 1fr 56px; }
+      .service-item-includes { display: none; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .cta-inner { grid-template-columns: 1fr; }
+      .cta-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 48px 0; }
+      .cta-right { padding: 40px 0 0; }
+      .services-section .section-head { grid-template-columns: 1fr; }
+      .pricer-banner { flex-direction: column; align-items: flex-start; padding: 36px; }
+    }
+    @media (max-width: 680px) {
+      .wrap { width: calc(100% - 32px); }
+      .nav-links { display: none; }
+      .results-grid, .steps-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .service-item { grid-template-columns: 40px 1fr 48px; }
+      .service-item-num { padding: 28px 0 28px 20px; }
+      .service-item-main { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="wrap nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">А</div>
+        АРИАННА
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">О компании</a></li>
+        <li><a href="index.html#services" class="active">Услуги</a></li>
+        <li><a href="pricer.html">Прейскурант</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Оставить заявку</a>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <div class="wrap breadcrumb-inner">
+      <a href="index.html">Главная</a>
+      <span class="breadcrumb-sep">→</span>
+      <a href="index.html#services">Услуги</a>
+      <span class="breadcrumb-sep">→</span>
+      <span class="breadcrumb-current">Правовая защита</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div>
+            <div class="hero-tag">Направление 03</div>
+            <h1>Правовая защита: полное спокойствие</h1>
+            <p class="hero-sub">Берём на себя юридическое сопровождение бизнеса: от проверки договоров и участия в переговорах до судебной защиты и корпоративных вопросов. Вы развиваете бизнес — мы защищаем его от правовых рисков.</p>
+            <div class="hero-cta-row">
+              <a href="#contact" class="btn-primary">Оставить заявку</a>
+              <a href="pricer.html#tab-legal" class="btn-ghost">Узнать стоимость</a>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-num">от 5 000 ₽</div>
+              <div class="stat-label">стоимость разработки договора</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">44/223</div>
+              <div class="stat-label">-ФЗ — тендерное сопровождение</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">20+</div>
+              <div class="stat-label">лет юридической практики</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-right-label">Что входит в направление</div>
+          <ul class="hero-right-list">
+            <li>Договорная работа и консультации</li>
+            <li>Тендерное сопровождение</li>
+            <li>Претензионная и судебная защита</li>
+            <li>Взаимодействие с государственными органами</li>
+            <li>Корпоративные вопросы</li>
+          </ul>
+          <p class="hero-right-tagline">Вы развиваете бизнес — мы защищаем его от правовых проблем</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- SERVICES DETAIL -->
+    <section class="services-section" id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="section-label">Состав услуг</div>
+            <h2>Пять направлений работы</h2>
+          </div>
+          <p>Каждое направление — это самостоятельный блок правовой поддержки. Работаем точечно под конкретную задачу или берём на себя комплексное юридическое сопровождение бизнеса.</p>
+        </div>
+
+        <div class="service-items">
+
+          <!-- 1 -->
+          <div class="service-item">
+            <div class="service-item-num">01</div>
+            <div class="service-item-main">
+              <h3>Договорная работа и консультации</h3>
+              <p>Разрабатываем договоры с нуля, проверяем и согласовываем контракты контрагентов, готовим дополнительные соглашения и протоколы разногласий. Консультируем устно и письменно по любым правовым вопросам.</p>
+            </div>
+            <div class="service-item-includes">
+              <div class="service-item-includes-label">Включает</div>
+              <ul>
+                <li>Разработка договора / соглашения «с нуля» — от 5 000 ₽</li>
+                <li>Правовая экспертиза договора контрагента — от 5 000 ₽</li>
+                <li>Подготовка дополнительного соглашения — от 2 000 ₽</li>
+                <li>Протокол разногласий — от 7 000 ₽</li>
+                <li>Письменные правовые заключения и консультации — от 10 000 ₽</li>
+                <li>Устные консультации (от 30 минут) — от 5 000 ₽</li>
+                <li>Участие в переговорах с контрагентами — от 10 000 ₽</li>
+              </ul>
+            </div>
+            <button class="service-item-arrow" onclick="openModal('Договорная работа и консультации')">→</button>
+          </div>
+
+          <!-- 2 -->
+          <div class="service-item">
+            <div class="service-item-num">02</div>
+            <div class="service-item-main">
+              <h3>Тендерное сопровождение</h3>
+              <p>Сопровождаем участие в государственных и коммерческих закупках по 44-ФЗ и 223-ФЗ: от проверки документации и экспертизы контракта до полного юридического сопровождения сделки.</p>
+            </div>
+            <div class="service-item-includes">
+              <div class="service-item-includes-label">Включает</div>
+              <ul>
+                <li>Анализ и проработка конкурсной / тендерной документации — от 5 000 ₽</li>
+                <li>Правовая экспертиза проекта контракта по 44-ФЗ / 223-ФЗ — от 5 000 ₽</li>
+                <li>Подготовка документов для участия в тендере — по согласованию</li>
+                <li>Оценка рисков и проверка условий исполнения контракта</li>
+                <li>Сопровождение на этапе заключения государственного контракта</li>
+              </ul>
+            </div>
+            <button class="service-item-arrow" onclick="openModal('Тендерное сопровождение')">→</button>
+          </div>
+
+          <!-- 3 -->
+          <div class="service-item">
+            <div class="service-item-num">03</div>
+            <div class="service-item-main">
+              <h3>Претензионная и судебная защита</h3>
+              <p>Ведём споры на всех стадиях: от досудебной претензии до представления интересов в арбитражном суде и судах общей юрисдикции. Сопровождаем исполнительное производство.</p>
+            </div>
+            <div class="service-item-includes">
+              <div class="service-item-includes-label">Включает</div>
+              <ul>
+                <li>Подготовка претензии / ответа на претензию — от 10 000 ₽</li>
+                <li>Подготовка искового заявления, отзыва, встречного иска — от 15 000 ₽</li>
+                <li>Представление интересов в суде первой инстанции — от 25 000 ₽</li>
+                <li>Апелляционная и кассационная инстанции — по согласованию</li>
+                <li>Исполнительное производство (ФССП, банк) — от 10 000 ₽</li>
+                <li>Подготовка процессуальных ходатайств и заявлений — от 3 000 ₽ / документ</li>
+              </ul>
+            </div>
+            <button class="service-item-arrow" onclick="openModal('Претензионная и судебная защита')">→</button>
+          </div>
+
+          <!-- 4 -->
+          <div class="service-item">
+            <div class="service-item-num">04</div>
+            <div class="service-item-main">
+              <h3>Взаимодействие с государственными органами</h3>
+              <p>Представляем интересы клиента в государственных органах, банках и у нотариусов. Готовим сопроводительные письма, доверенности и уведомления, ведём переговоры от имени компании.</p>
+            </div>
+            <div class="service-item-includes">
+              <div class="service-item-includes-label">Включает</div>
+              <ul>
+                <li>Выезд к нотариусу, в банк, налоговую, Минюст (Москва и МО) — от 10 000 ₽</li>
+                <li>Выезд за пределами Москвы — от 10 000 ₽ + возмещение расходов</li>
+                <li>Телефонные переговоры с госорганами от имени клиента — от 1 000 ₽</li>
+                <li>Подготовка сопроводительных писем, уведомлений, доверенностей — от 1 000 ₽</li>
+                <li>Подача уведомления об обработке персональных данных в Роскомнадзор — от 10 000 ₽</li>
+              </ul>
+            </div>
+            <button class="service-item-arrow" onclick="openModal('Взаимодействие с государственными органами')">→</button>
+          </div>
+
+          <!-- 5 -->
+          <div class="service-item">
+            <div class="service-item-num">05</div>
+            <div class="service-item-main">
+              <h3>Корпоративные вопросы</h3>
+              <p>Сопровождаем регистрацию, реорганизацию и ликвидацию юридических лиц, внесение изменений в учредительные документы. Разрабатываем корпоративные регламенты и обеспечиваем защиту интеллектуальной собственности.</p>
+            </div>
+            <div class="service-item-includes">
+              <div class="service-item-includes-label">Включает</div>
+              <ul>
+                <li>Регистрация ООО / ИП — от 10 000 ₽; АО, НКО — от 15 000 ₽</li>
+                <li>Внесение изменений в ЕГРЮЛ (смена директора, адреса, ОКВЭД) — от 7 000 ₽</li>
+                <li>Добровольная ликвидация юридического лица — от 20 000 ₽</li>
+                <li>Реорганизация, слияние и поглощение — от 20 000 ₽</li>
+                <li>Разработка локальных актов: регламентов, положений, инструкций — от 5 000 ₽</li>
+                <li>Оформление интеллектуальной собственности, регистрация ПО — по согласованию</li>
+              </ul>
+            </div>
+            <button class="service-item-arrow" onclick="openModal('Корпоративные вопросы')">→</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="results">
+      <div class="wrap">
+        <div class="section-label">Что вы получаете</div>
+        <h2>Конкретные результаты для бизнеса</h2>
+        <div class="results-grid">
+          <article class="result-card">
+            <div class="result-num">01</div>
+            <h3>Защищённые контракты</h3>
+            <p>Все договоры проверены или разработаны нами — риски обозначены, спорные условия устранены ещё до подписания.</p>
+          </article>
+          <article class="result-card">
+            <div class="result-num">02</div>
+            <h3>Победы в тендерах</h3>
+            <p>Юридически выверенная документация и корректно оформленный контракт — без оснований для отклонения заявки.</p>
+          </article>
+          <article class="result-card">
+            <div class="result-num">03</div>
+            <h3>Эффективная защита в спорах</h3>
+            <p>Досудебное урегулирование там, где это возможно. Твёрдая позиция в суде там, где это необходимо.</p>
+          </article>
+          <article class="result-card">
+            <div class="result-num">04</div>
+            <h3>Корпоративный порядок</h3>
+            <p>Учредительные документы, регламенты и локальные акты актуальны и соответствуют действующему законодательству.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW WE WORK -->
+    <section id="how">
+      <div class="wrap">
+        <div class="section-label">Как мы работаем</div>
+        <h2>Четыре шага до старта</h2>
+        <div class="steps-grid">
+          <article class="step-card">
+            <div class="step-num">01</div>
+            <h3>Заявка и знакомство</h3>
+            <p>Вы оставляете заявку, мы связываемся, уточняем задачу и определяем, какое направление правовой поддержки актуально.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-num">02</div>
+            <h3>Анализ ситуации</h3>
+            <p>Изучаем документы, оцениваем риски и правовую позицию. Предлагаем оптимальную стратегию действий.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-num">03</div>
+            <h3>Договор и NDA</h3>
+            <p>Подписываем договор с соглашением о неразглашении. Фиксируем объём, сроки и стоимость — без скрытых условий.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-num">04</div>
+            <h3>Решение задачи</h3>
+            <p>Берём на себя всю работу с документами, органами и контрагентами. Держим вас в курсе на каждом этапе.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICER BANNER -->
+    <section id="pricer">
+      <div class="wrap">
+        <div class="section-label">Стоимость</div>
+        <div class="pricer-banner">
+          <div class="pricer-banner-left">
+            <h3>Хотите узнать стоимость конкретной услуги?</h3>
+            <p>Юридические услуги тарифицируются индивидуально по каждой задаче. Посмотрите полный прейскурант или оставьте заявку — рассчитаем стоимость под вашу ситуацию.</p>
+          </div>
+          <a href="pricer.html#full-price" class="btn-primary" style="white-space: nowrap; flex-shrink: 0;">Смотреть прейскурант →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA + CONTACT -->
+    <section id="contact" class="cta-section">
+      <div class="wrap">
+        <div class="cta-inner">
+          <div class="cta-left">
+            <div>
+              <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:28px;display:flex;align-items:center;gap:10px;">
+                <span style="display:inline-block;width:24px;height:1px;background:rgba(255,255,255,0.2);"></span>
+                Начать сотрудничество
+              </div>
+              <h2>Защитите бизнес от правовых рисков</h2>
+            </div>
+            <p class="cta-tagline">Оставьте заявку — мы свяжемся в течение рабочего дня, разберёмся в вашей ситуации и предложим оптимальный формат юридической поддержки.</p>
+            <div class="cta-buttons">
+              <a href="mailto:info@arianna.ru" class="btn-white">Написать на почту</a>
+              <a href="index_v2-5.html#services" class="btn-outline-white">Другие направления</a>
+            </div>
+          </div>
+          <div class="cta-right">
+            <div>
+              <div class="contact-label">Форма обратной связи</div>
+              <div class="contact-form-fields">
+                <input class="form-field" type="text" placeholder="Имя и компания" />
+                <input class="form-field" type="text" placeholder="Телефон или e-mail" />
+                <textarea class="form-field" rows="3" placeholder="Кратко о задаче"></textarea>
+                <button class="form-submit">Отправить заявку</button>
+              </div>
+            </div>
+            <div class="contact-divider"></div>
+            <div>
+              <div class="contact-label">Электронная почта</div>
+              <div class="contact-email">info@arianna.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-logo">АРИАННА</div>
+      <div class="footer-note">© 2026 АРИАННА. Надёжный партнёр в сопровождении бизнеса</div>
+      <div class="footer-links">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#contact">Контакты</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+      <div class="modal-tag">Получить консультацию</div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-fields">
+        <input class="modal-field" type="text" placeholder="Имя и компания" />
+        <input class="modal-field" type="text" placeholder="Телефон или e-mail" />
+        <textarea class="modal-field" rows="3" placeholder="Кратко опишите задачу (необязательно)"></textarea>
+        <button class="modal-submit">Получить консультацию</button>
+        <p class="modal-note">Ответим в течение рабочего дня. Консультация — бесплатно.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(title) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';

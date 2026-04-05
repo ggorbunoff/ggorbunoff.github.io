@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>АРИАННА — Прейскурант</title>
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #fafafa;
+      --mid: #555;
+      --light: #e8e8e8;
+      --lighter: #f2f2f2;
+      --max: 1240px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: Arial, Helvetica, sans-serif; font-weight: 400; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), 100% - 48px); margin-inline: auto; }
+
+    /* ── NAV ── */
+    nav { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--light); background: rgba(250,250,250,0.94); backdrop-filter: blur(12px); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; gap: 32px; }
+    .logo { font-size: 18px; font-weight: 900; letter-spacing: 0.12em; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 32px; height: 32px; border: 2px solid var(--black); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; flex-shrink: 0; }
+    .nav-links { display: flex; gap: 32px; list-style: none; font-size: 13px; }
+    .nav-links a { color: var(--mid); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--black); }
+    .nav-links a.active { color: var(--black); font-weight: 700; }
+    .nav-cta { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 10px 20px; border: 1.5px solid var(--black); background: var(--black); color: var(--white); transition: background 0.2s, color 0.2s; white-space: nowrap; }
+    .nav-cta:hover { background: transparent; color: var(--black); }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb { padding: 14px 0; border-bottom: 1px solid var(--light); }
+    .breadcrumb-inner { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--mid); }
+    .breadcrumb-inner a:hover { color: var(--black); }
+    .breadcrumb-sep { color: var(--light); }
+    .breadcrumb-current { color: var(--black); }
+
+    /* ── HERO ── */
+    .hero { border-bottom: 1px solid var(--light); }
+    .hero-inner { display: grid; grid-template-columns: 1fr 380px; min-height: 48vh; }
+    .hero-left { padding: 64px 56px 64px 0; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--light); }
+    .hero-tag { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); display: flex; align-items: center; gap: 10px; }
+    .hero-tag::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--mid); }
+    h1 { font-size: clamp(32px, 4vw, 56px); font-weight: 900; line-height: 1.02; letter-spacing: -0.02em; margin-top: 24px; max-width: 18ch; }
+    .hero-sub { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 50ch; margin-top: 20px; }
+    .hero-nav-links { display: flex; gap: 0; margin-top: 40px; flex-wrap: wrap; border: 1px solid var(--light); align-self: flex-start; }
+    .hero-nav-link { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; padding: 12px 20px; color: var(--mid); border-right: 1px solid var(--light); transition: background 0.15s, color 0.15s; white-space: nowrap; }
+    .hero-nav-link:last-child { border-right: none; }
+    .hero-nav-link:hover { background: var(--lighter); color: var(--black); }
+
+    .hero-right { background: var(--black); color: var(--white); padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; }
+    .hero-right-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .hero-right-points { list-style: none; flex: 1; margin-top: 28px; }
+    .hero-right-points li { font-size: 15px; color: rgba(255,255,255,0.7); padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: flex-start; gap: 12px; line-height: 1.45; }
+    .hero-right-points li:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+    .hero-right-points li::before { content: ''; display: inline-block; width: 6px; height: 6px; border: 1.5px solid rgba(255,255,255,0.3); flex-shrink: 0; margin-top: 4px; }
+    .hero-right-tagline { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.35); padding-top: 20px; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+
+    /* ── SHARED SECTION ── */
+    section { padding: 80px 0; border-bottom: 1px solid var(--light); }
+    .section-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); display: flex; align-items: center; gap: 10px; margin-bottom: 40px; }
+    .section-label::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--mid); }
+    h2 { font-size: clamp(24px, 2.8vw, 40px); font-weight: 900; letter-spacing: -0.02em; line-height: 1.05; }
+    h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; }
+
+    /* ── CALCULATOR ── */
+    .calc-layout { display: grid; grid-template-columns: 1fr 360px; gap: 1px; background: var(--light); margin-top: 48px; }
+
+    .calc-form { background: var(--white); padding: 48px; display: flex; flex-direction: column; gap: 36px; }
+
+    .calc-group { display: flex; flex-direction: column; gap: 12px; }
+    .calc-group-label { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
+    .calc-group-hint { font-size: 13px; color: var(--mid); }
+
+    .calc-options { display: flex; gap: 1px; background: var(--light); flex-wrap: wrap; }
+    .calc-option { background: var(--lighter); padding: 12px 20px; font-size: 14px; cursor: pointer; transition: background 0.15s, color 0.15s; border: none; font-family: Arial, Helvetica, sans-serif; color: var(--mid); }
+    .calc-option:hover { background: var(--light); color: var(--black); }
+    .calc-option.selected { background: var(--black); color: var(--white); }
+
+    .calc-slider-wrap { display: flex; flex-direction: column; gap: 10px; }
+    .calc-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 2px; background: var(--light); outline: none; }
+    .calc-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; background: var(--black); cursor: pointer; border: none; }
+    .calc-slider::-moz-range-thumb { width: 18px; height: 18px; background: var(--black); cursor: pointer; border: none; }
+    .calc-slider-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--mid); }
+    .calc-slider-value { font-size: 15px; font-weight: 700; }
+
+    .calc-coeffs { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--light); }
+    .calc-coeff { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-bottom: 1px solid var(--light); cursor: pointer; transition: background 0.15s; }
+    .calc-coeff:last-child { border-bottom: none; }
+    .calc-coeff:hover { background: var(--lighter); }
+    .calc-coeff input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--black); cursor: pointer; flex-shrink: 0; }
+    .calc-coeff-label { font-size: 14px; flex: 1; line-height: 1.4; }
+    .calc-coeff-pct { font-size: 13px; font-weight: 700; color: var(--mid); white-space: nowrap; }
+
+    /* Result panel */
+    .calc-result { background: var(--black); color: var(--white); padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; }
+    .calc-result-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .calc-result-rows { flex: 1; margin-top: 24px; display: flex; flex-direction: column; gap: 0; }
+    .calc-result-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .calc-result-row:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+    .calc-result-row-name { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.4; }
+    .calc-result-row-val { font-size: 15px; font-weight: 700; white-space: nowrap; }
+    .calc-result-row-val.inactive { color: rgba(255,255,255,0.25); font-weight: 400; font-size: 13px; }
+
+    .calc-total { margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.2); }
+    .calc-total-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+    .calc-total-amount { font-size: 36px; font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
+    .calc-total-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 8px; line-height: 1.5; }
+
+    .calc-cta { margin-top: 28px; }
+    .btn-white { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 16px 28px; background: var(--white); color: var(--black); border: 1.5px solid var(--white); cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-block; font-family: Arial, Helvetica, sans-serif; }
+    .btn-white:hover { background: transparent; color: var(--white); }
+
+    /* ── DOWNLOAD BANNER ── */
+    .download-banner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 36px 48px; background: var(--lighter); border: 1px solid var(--light); margin-bottom: 56px; }
+    .download-banner-left h3 { font-size: 20px; margin-bottom: 6px; }
+    .download-banner-left p { font-size: 15px; color: var(--mid); }
+    .btn-download { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 16px 28px; background: var(--black); color: var(--white); border: 1.5px solid var(--black); cursor: pointer; transition: background 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; flex-shrink: 0; font-family: Arial, Helvetica, sans-serif; }
+    .btn-download:hover { background: transparent; color: var(--black); }
+    .btn-download-icon { font-size: 15px; }
+
+    /* ── PRICE TABLES ── */
+    .price-tabs { display: flex; gap: 0; border: 1px solid var(--light); margin-bottom: 32px; align-self: flex-start; width: max-content; }
+    .price-tab { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; padding: 14px 24px; cursor: pointer; border-right: 1px solid var(--light); transition: background 0.15s, color 0.15s; background: var(--lighter); color: var(--mid); }
+    .price-tab:last-child { border-right: none; }
+    .price-tab.active { background: var(--black); color: var(--white); }
+    .price-tab:hover:not(.active) { background: var(--light); color: var(--black); }
+
+    .price-table-wrap { display: none; }
+    .price-table-wrap.active { display: block; }
+
+    .price-table { width: 100%; border-collapse: collapse; border: 1px solid var(--light); }
+    .price-table th { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); text-align: left; padding: 14px 20px; background: var(--lighter); border-bottom: 1px solid var(--light); border-right: 1px solid var(--light); }
+    .price-table th:last-child { border-right: none; }
+    .price-table td { font-size: 15px; padding: 16px 20px; border-bottom: 1px solid var(--light); border-right: 1px solid var(--light); vertical-align: top; line-height: 1.45; }
+    .price-table td:last-child { border-right: none; }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table tr:hover td { background: var(--lighter); }
+    .price-table .price-val { font-weight: 700; white-space: nowrap; }
+    .price-table .price-note { font-size: 13px; color: var(--mid); margin-top: 4px; }
+    .price-table .price-group-header td { background: var(--black); color: var(--white); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; padding: 12px 20px; }
+    .price-table .price-group-header:hover td { background: var(--black); }
+
+    .price-note-box { margin-top: 20px; padding: 20px 24px; background: var(--lighter); border: 1px solid var(--light); font-size: 14px; color: var(--mid); line-height: 1.6; }
+    .price-note-box strong { color: var(--black); }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--black); color: var(--white); border-bottom: none; }
+    .cta-inner { display: grid; grid-template-columns: 1fr 380px; gap: 0; }
+    .cta-left { padding: 64px 56px 64px 0; border-right: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; justify-content: space-between; }
+    .cta-left h2 { color: var(--white); max-width: 18ch; font-size: clamp(24px, 2.8vw, 40px); }
+    .cta-tagline { font-size: 17px; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 44ch; margin-top: 20px; }
+    .cta-buttons { display: flex; gap: 14px; margin-top: 40px; flex-wrap: wrap; }
+    .btn-outline-white { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 16px 28px; background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.4); cursor: pointer; transition: border-color 0.2s; display: inline-block; }
+    .btn-outline-white:hover { border-color: var(--white); }
+    .cta-right { padding: 64px 0 64px 56px; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+    .contact-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+    .contact-email { font-size: 16px; font-weight: 700; color: var(--white); }
+    .contact-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.1); }
+    .contact-form-fields { display: flex; flex-direction: column; gap: 12px; }
+    .form-field { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); padding: 13px 16px; font-size: 15px; color: var(--white); font-family: Arial, Helvetica, sans-serif; outline: none; transition: border-color 0.2s; width: 100%; }
+    .form-field::placeholder { color: rgba(255,255,255,0.3); }
+    .form-field:focus { border-color: rgba(255,255,255,0.5); }
+    .form-submit { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 14px 24px; background: var(--white); color: var(--black); border: none; cursor: pointer; transition: opacity 0.2s; align-self: flex-start; font-family: Arial, Helvetica, sans-serif; }
+    .form-submit:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer { padding: 28px 0; border-top: 1px solid var(--light); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 0.1em; }
+    .footer-note { font-size: 12px; color: var(--mid); }
+    .footer-links { display: flex; gap: 24px; font-size: 12px; color: var(--mid); }
+    .footer-links a:hover { color: var(--black); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { border-right: none; border-bottom: 1px solid var(--light); padding: 48px 0; }
+      .calc-layout { grid-template-columns: 1fr; }
+      .calc-result { min-height: 300px; }
+      .cta-inner { grid-template-columns: 1fr; }
+      .cta-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 48px 0; }
+      .cta-right { padding: 40px 0 0; }
+      .download-banner { flex-direction: column; align-items: flex-start; padding: 28px; }
+      .price-tabs { width: 100%; }
+      .price-tab { flex: 1; text-align: center; }
+    }
+    @media (max-width: 680px) {
+      .wrap { width: calc(100% - 32px); }
+      .nav-links { display: none; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .calc-form { padding: 28px 24px; gap: 28px; }
+      .calc-result { padding: 28px 24px; }
+      .price-table th, .price-table td { padding: 12px 14px; font-size: 14px; }
+      .hero-nav-links { width: 100%; }
+      .hero-nav-link { flex: 1; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="wrap nav-inner">
+      <a href="index_v2-5.html" class="logo">
+        <div class="logo-icon">А</div>
+        АРИАННА
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">О компании</a></li>
+        <li><a href="index.html#services">Услуги</a></li>
+        <li><a href="pricer.html" class="active">Прейскурант</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Оставить заявку</a>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <div class="wrap breadcrumb-inner">
+      <a href="index.html">Главная</a>
+      <span class="breadcrumb-sep">→</span>
+      <span class="breadcrumb-current">Прейскурант</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div>
+            <div class="hero-tag">Стоимость услуг</div>
+            <h1>Прейскурант и калькулятор стоимости</h1>
+            <p class="hero-sub">Рассчитайте предварительную стоимость с помощью калькулятора или изучите полный прейскурант. Итоговая цена всегда согласовывается индивидуально.</p>
+            <div class="hero-nav-links">
+              <a href="#calculator" class="hero-nav-link">Калькулятор</a>
+              <a href="#full-price" class="hero-nav-link">Полный прейскурант</a>
+              <a href="#contact" class="hero-nav-link">Получить консультацию</a>
+            </div>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-right-label">Из чего складывается цена</div>
+          <ul class="hero-right-points">
+            <li>Система налогообложения (ОСНО, УСН 6%, УСН 15%)</li>
+            <li>Количество операций / документов в месяц</li>
+            <li>Число сотрудников в штате</li>
+            <li>Особенности деятельности (ВЭД, НКО, производство и др.)</li>
+            <li>Набор направлений: учёт, кадры, юридическое сопровождение</li>
+          </ul>
+          <p class="hero-right-tagline">Стоимость рассчитывается индивидуально. Калькулятор даёт предварительную оценку.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- CALCULATOR -->
+    <section id="calculator">
+      <div class="wrap">
+        <div class="section-label">Шаг 1 из 2</div>
+        <h2>Рассчитайте стоимость</h2>
+
+        <div class="calc-layout">
+          <div class="calc-form">
+
+            <!-- Система налогообложения -->
+            <div class="calc-group">
+              <div class="calc-group-label">Система налогообложения</div>
+              <div class="calc-options" id="taxOptions">
+                <button class="calc-option selected" data-tax="osno">ОСНО</button>
+                <button class="calc-option" data-tax="usn15">УСН 15%</button>
+                <button class="calc-option" data-tax="usn6">УСН 6% (квартал)</button>
+              </div>
+            </div>
+
+            <!-- Кол-во операций -->
+            <div class="calc-group">
+              <div class="calc-group-label">Количество операций в месяц</div>
+              <div class="calc-group-hint">Одна строка банковской выписки, кассовый ордер, накладная до 10 позиций = 1 операция</div>
+              <div class="calc-slider-wrap">
+                <div class="calc-slider-value" id="opsValue">до 50 операций</div>
+                <input type="range" class="calc-slider" id="opsSlider" min="0" max="10" value="4" step="1" />
+                <div class="calc-slider-labels">
+                  <span>10</span><span>50</span><span>100</span><span>200</span><span>300</span><span>500</span><span>700</span><span>900+</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Сотрудники -->
+            <div class="calc-group">
+              <div class="calc-group-label">Количество сотрудников (расчёт зарплаты)</div>
+              <div class="calc-options" id="empOptions">
+                <button class="calc-option selected" data-emp="0">Не нужен</button>
+                <button class="calc-option" data-emp="10">до 10 чел.</button>
+                <button class="calc-option" data-emp="30">11–30 чел.</button>
+                <button class="calc-option" data-emp="50">31–50 чел.</button>
+                <button class="calc-option" data-emp="51">51+ чел.</button>
+              </div>
+            </div>
+
+            <!-- Повышающие коэффициенты -->
+            <div class="calc-group">
+              <div class="calc-group-label">Особенности деятельности</div>
+              <div class="calc-group-hint">Отметьте, если применимо — влияют на итоговую стоимость</div>
+              <div class="calc-coeffs" id="coeffsGroup">
+                <label class="calc-coeff"><input type="checkbox" data-pct="20" onchange="recalc()"> <span class="calc-coeff-label">ВЭД, валютные платежи</span> <span class="calc-coeff-pct">+20%</span></label>
+                <label class="calc-coeff"><input type="checkbox" data-pct="20" onchange="recalc()"> <span class="calc-coeff-label">НКО</span> <span class="calc-coeff-pct">+20%</span></label>
+                <label class="calc-coeff"><input type="checkbox" data-pct="20" onchange="recalc()"> <span class="calc-coeff-label">Производство / строительство</span> <span class="calc-coeff-pct">+20%</span></label>
+                <label class="calc-coeff"><input type="checkbox" data-pct="20" onchange="recalc()"> <span class="calc-coeff-label">Государственные контракты, гранты</span> <span class="calc-coeff-pct">+20%</span></label>
+                <label class="calc-coeff"><input type="checkbox" data-pct="15" onchange="recalc()"> <span class="calc-coeff-label">Ведение ЭДО</span> <span class="calc-coeff-pct">+15%</span></label>
+                <label class="calc-coeff"><input type="checkbox" data-pct="15" onchange="recalc()"> <span class="calc-coeff-label">Наличие филиалов / обособленных подразделений</span> <span class="calc-coeff-pct">+15%</span></label>
+                <label class="calc-coeff"><input type="checkbox" data-pct="10" onchange="recalc()"> <span class="calc-coeff-label">Применение ККТ</span> <span class="calc-coeff-pct">+10%</span></label>
+                <label class="calc-coeff"><input type="checkbox" data-pct="20" onchange="recalc()"> <span class="calc-coeff-label">Общепит</span> <span class="calc-coeff-pct">+20%</span></label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RESULT -->
+          <div class="calc-result">
+            <div class="calc-result-label">Предварительный расчёт</div>
+            <div class="calc-result-rows">
+              <div class="calc-result-row">
+                <span class="calc-result-row-name">Бухгалтерское сопровождение</span>
+                <span class="calc-result-row-val" id="resAccounting">40 000 ₽</span>
+              </div>
+              <div class="calc-result-row">
+                <span class="calc-result-row-name">Расчёт зарплаты и кадры</span>
+                <span class="calc-result-row-val" id="resPayroll">—</span>
+              </div>
+              <div class="calc-result-row">
+                <span class="calc-result-row-name">Повышающие коэффициенты</span>
+                <span class="calc-result-row-val" id="resCoeffs">—</span>
+              </div>
+            </div>
+            <div class="calc-total">
+              <div class="calc-total-label">Итого в месяц, от</div>
+              <div class="calc-total-amount" id="resTotal">40 000 ₽</div>
+              <div class="calc-total-note">Предварительная оценка на основе базового тарифа. Точная стоимость согласовывается индивидуально после анализа задач.</div>
+            </div>
+            <div class="calc-cta">
+              <button class="btn-white" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Обсудить с экспертом →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FULL PRICE TABLE -->
+    <section id="full-price">
+      <div class="wrap">
+        <div class="section-label">Шаг 2 из 2</div>
+        <h2>Полный прейскурант</h2>
+
+        <!-- Download banner -->
+        <div class="download-banner" style="margin-top: 40px;">
+          <div class="download-banner-left">
+            <h3>Скачать полный прейскурант</h3>
+            <p>PDF-версия со всеми тарифами и условиями — удобно для изучения и передачи коллегам</p>
+          </div>
+          <a href="#" class="btn-download">
+            <span class="btn-download-icon">↓</span>
+            Скачать PDF
+          </a>
+        </div>
+
+        <!-- Tabs -->
+        <div class="price-tabs">
+          <div class="price-tab active" onclick="showTab('accounting')">Бухгалтерия</div>
+          <div class="price-tab" onclick="showTab('hr')">Кадры и зарплата</div>
+          <div class="price-tab" onclick="showTab('legal')">Юридические услуги</div>
+        </div>
+
+        <!-- ACCOUNTING TABLE -->
+        <div class="price-table-wrap active" id="tab-accounting">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th style="width:30%">Количество операций в месяц</th>
+                <th>ОСНО</th>
+                <th>УСН 15%</th>
+                <th>УСН 6% (в квартал)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>до 10</td><td class="price-val">20 000 ₽</td><td class="price-val">20 000 ₽</td><td class="price-val">15 000 ₽</td></tr>
+              <tr><td>до 20</td><td class="price-val">25 000 ₽</td><td class="price-val">25 000 ₽</td><td class="price-val">20 000 ₽</td></tr>
+              <tr><td>до 30</td><td class="price-val">30 000 ₽</td><td class="price-val">30 000 ₽</td><td class="price-val">25 000 ₽</td></tr>
+              <tr><td>до 40</td><td class="price-val">35 000 ₽</td><td class="price-val">35 000 ₽</td><td class="price-val">30 000 ₽</td></tr>
+              <tr><td>до 50</td><td class="price-val">40 000 ₽</td><td class="price-val">40 000 ₽</td><td class="price-val">35 000 ₽</td></tr>
+              <tr><td>до 100</td><td class="price-val">65 000 ₽</td><td class="price-val">65 000 ₽</td><td class="price-val">60 000 ₽</td></tr>
+              <tr><td>до 200</td><td class="price-val">115 000 ₽</td><td class="price-val">115 000 ₽</td><td class="price-val">110 000 ₽</td></tr>
+              <tr><td>до 300</td><td class="price-val">140 000 ₽</td><td class="price-val">140 000 ₽</td><td class="price-val">135 000 ₽</td></tr>
+              <tr><td>до 500</td><td class="price-val">190 000 ₽</td><td class="price-val">190 000 ₽</td><td class="price-val">185 000 ₽</td></tr>
+              <tr><td>до 700</td><td class="price-val">240 000 ₽</td><td class="price-val">240 000 ₽</td><td class="price-val">235 000 ₽</td></tr>
+              <tr><td>до 900</td><td class="price-val">290 000 ₽</td><td class="price-val">290 000 ₽</td><td class="price-val">285 000 ₽</td></tr>
+              <tr><td>свыше 900</td><td colspan="3" class="price-val" style="color:var(--mid);font-weight:400;">Индивидуальные условия после предварительного анализа</td></tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 24px;">
+            <table class="price-table">
+              <thead>
+                <tr><th colspan="2">Надбавки к базовой стоимости</th></tr>
+              </thead>
+              <tbody>
+                <tr class="price-group-header"><td colspan="2">Отчётность</td></tr>
+                <tr><td>Квартальная бухгалтерская отчётность (1 комплект)</td><td class="price-val">5 000 ₽</td></tr>
+                <tr><td>Налоговая отчётность, уведомление (1 документ)</td><td class="price-val">2 000 ₽</td></tr>
+                <tr><td>Годовая бухгалтерская отчётность (1 комплект)</td><td class="price-val">15 000 ₽</td></tr>
+                <tr><td>Отчёты в статистику (1 отчёт)</td><td class="price-val">1 000 ₽</td></tr>
+                <tr class="price-group-header"><td colspan="2">Повышающие коэффициенты к базовой стоимости</td></tr>
+                <tr><td>ВЭД, валютные платежи</td><td class="price-val">+20%</td></tr>
+                <tr><td>НКО</td><td class="price-val">+20%</td></tr>
+                <tr><td>Производство / строительство / общепит</td><td class="price-val">+20%</td></tr>
+                <tr><td>Государственные контракты, гранты</td><td class="price-val">+20%</td></tr>
+                <tr><td>Раздельный учёт НДС</td><td class="price-val">+20%</td></tr>
+                <tr><td>Наличие кредитов / лизинга</td><td class="price-val">+10%</td></tr>
+                <tr><td>Ведение ЭДО</td><td class="price-val">+15%</td></tr>
+                <tr><td>Применение ККТ</td><td class="price-val">+10%</td></tr>
+                <tr><td>Наличие филиалов (второе подразделение)</td><td class="price-val">+15%, далее +10% за каждое</td></tr>
+                <tr><td>Выручка от 100 млн руб. в год</td><td class="price-val">+20%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="price-note-box">
+            <strong>Что считается операцией:</strong> строка банковской выписки, кассовый ордер, накладная до 10 позиций, акт выполненных работ, строка авансового отчёта. Обработка занимает 2–3 дня, срочные — в течение рабочего дня.
+          </div>
+        </div>
+
+        <!-- HR TABLE -->
+        <div class="price-table-wrap" id="tab-hr">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th>Количество сотрудников</th>
+                <th>Стоимость</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>до 10 человек</td><td class="price-val">2 000 ₽ за каждого сотрудника</td></tr>
+              <tr><td>11–30 человек</td><td class="price-val">1 500 ₽ за каждого сотрудника</td></tr>
+              <tr><td>31–50 человек</td><td class="price-val">1 000 ₽ за каждого сотрудника</td></tr>
+              <tr><td>от 51 человека</td><td class="price-val">850 ₽ за каждого сотрудника</td></tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 24px;">
+            <table class="price-table">
+              <thead><tr><th colspan="2">Что входит в тариф</th></tr></thead>
+              <tbody>
+                <tr class="price-group-header"><td colspan="2">Кадровый документооборот</td></tr>
+                <tr><td>Оформление приёма, увольнения, переводов сотрудников</td><td class="price-val">В тарифе</td></tr>
+                <tr><td>Отпуска (ежегодные, учебные, по уходу за ребёнком)</td><td class="price-val">В тарифе</td></tr>
+                <tr><td>Оформление командировок, штатного расписания, графика отпусков</td><td class="price-val">В тарифе</td></tr>
+                <tr><td>Табель учёта рабочего времени</td><td class="price-val">В тарифе</td></tr>
+                <tr><td>Ежегодные отчёты ЕФС-1 в СФР, персонифицированные сведения в ФНС</td><td class="price-val">В тарифе</td></tr>
+                <tr class="price-group-header"><td colspan="2">Расчёт заработной платы</td></tr>
+                <tr><td>Начисление зарплаты, премий, отпускных, больничных, командировочных</td><td class="price-val">В тарифе</td></tr>
+                <tr><td>Расчёт НДФЛ и страховых взносов, платёжные ведомости</td><td class="price-val">В тарифе</td></tr>
+                <tr><td>Справки 2-НДФЛ по запросу, записки-расчёты при увольнении</td><td class="price-val">В тарифе</td></tr>
+                <tr class="price-group-header"><td colspan="2">Дополнительные услуги (оплачиваются отдельно)</td></tr>
+                <tr><td>Увольнение по инициативе работодателя (прогул, сокращение)</td><td class="price-val">2 000 ₽ / мероприятие</td></tr>
+                <tr><td>Воинский учёт (без личного присутствия в гос. учреждениях)</td><td class="price-val">от 1 000 ₽ / чел.</td></tr>
+                <tr><td>Управленческая отчётность по персоналу</td><td class="price-val">от 2 000 ₽ / документ</td></tr>
+                <tr><td>Восстановление кадрового учёта</td><td class="price-val">Договорная</td></tr>
+                <tr><td>Консультация по трудовому праву</td><td class="price-val">от 1 500 ₽ / консультация</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="price-note-box">
+            Тариф включает весь базовый кадровый документооборот и расчёт зарплаты. Дополнительные операции (дисциплинарные взыскания, нестандартные выплаты, разработка положений) оплачиваются отдельно по согласованному прайсу.
+          </div>
+        </div>
+
+        <!-- LEGAL TABLE -->
+        <div class="price-table-wrap" id="tab-legal">
+          <table class="price-table">
+            <thead><tr><th style="width:60%">Услуга</th><th>Стоимость</th></tr></thead>
+            <tbody>
+              <tr class="price-group-header"><td colspan="2">Договорная работа и консультации</td></tr>
+              <tr><td>Разработка договора / соглашения «с нуля»</td><td class="price-val">от 5 000 ₽</td></tr>
+              <tr><td>Правовая экспертиза договора / соглашения</td><td class="price-val">от 5 000 ₽</td></tr>
+              <tr><td>Дополнительное соглашение к договору</td><td class="price-val">от 2 000 ₽</td></tr>
+              <tr><td>Протокол разногласий</td><td class="price-val">от 7 000 ₽</td></tr>
+              <tr><td>Письменная консультация / правовое заключение</td><td class="price-val">от 10 000 ₽</td></tr>
+              <tr><td>Устная консультация (от 30 мин.)</td><td class="price-val">от 5 000 ₽</td></tr>
+              <tr><td>Участие в переговорах</td><td class="price-val">от 10 000 ₽</td></tr>
+              <tr class="price-group-header"><td colspan="2">Тендерное сопровождение</td></tr>
+              <tr><td>Проработка конкурсной / тендерной документации (44-ФЗ, 223-ФЗ)</td><td class="price-val">от 5 000 ₽</td></tr>
+              <tr><td>Правовая экспертиза контракта по 44-ФЗ / 223-ФЗ</td><td class="price-val">от 5 000 ₽</td></tr>
+              <tr class="price-group-header"><td colspan="2">Претензионная и судебная работа</td></tr>
+              <tr><td>Подготовка претензии / ответа на претензию</td><td class="price-val">от 10 000 ₽</td></tr>
+              <tr><td>Подготовка искового заявления, отзыва, встречного иска</td><td class="price-val">от 15 000 ₽</td></tr>
+              <tr><td>Представление интересов в суде первой инстанции</td><td class="price-val">от 25 000 ₽</td></tr>
+              <tr><td>Апелляционная / кассационная инстанция</td><td class="price-val">По согласованию</td></tr>
+              <tr><td>Исполнительное производство (ФССП / банк)</td><td class="price-val">от 10 000 ₽</td></tr>
+              <tr class="price-group-header"><td colspan="2">Корпоративные вопросы</td></tr>
+              <tr><td>Подготовка документов для регистрации ООО / ИП</td><td class="price-val">от 10 000 ₽</td></tr>
+              <tr><td>Регистрация АО, НКО и иных организационно-правовых форм</td><td class="price-val">от 15 000 ₽</td></tr>
+              <tr><td>Внесение изменений в сведения о юр. лице (смена директора, адреса и др.)</td><td class="price-val">от 7 000 ₽</td></tr>
+              <tr><td>Добровольная ликвидация юридического лица</td><td class="price-val">от 20 000 ₽</td></tr>
+              <tr><td>Реорганизация, слияние и поглощение</td><td class="price-val">от 20 000 ₽</td></tr>
+              <tr><td>Разработка / согласование локальных актов (регламенты, положения)</td><td class="price-val">от 5 000 ₽</td></tr>
+            </tbody>
+          </table>
+          <div class="price-note-box">
+            Выезд к нотариусу, в банк или государственные органы в пределах Москвы и МО — <strong>от 10 000 ₽</strong>. За пределами — от 10 000 ₽ + возмещение расходов. Телефонные переговоры с государственными органами от имени клиента — от 1 000 ₽.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA + CONTACT -->
+    <section id="contact" class="cta-section">
+      <div class="wrap">
+        <div class="cta-inner">
+          <div class="cta-left">
+            <div>
+              <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:28px;display:flex;align-items:center;gap:10px;">
+                <span style="display:inline-block;width:24px;height:1px;background:rgba(255,255,255,0.2);"></span>
+                Получить консультацию
+              </div>
+              <h2>Обсудим вашу задачу и рассчитаем точную стоимость</h2>
+            </div>
+            <p class="cta-tagline">Оставьте заявку — мы свяжемся в течение рабочего дня и подберём оптимальный формат сотрудничества под ваши задачи и бюджет.</p>
+            <div class="cta-buttons">
+              <a href="mailto:info@arianna.ru" class="btn-white">Написать на почту</a>
+              <a href="index_v2-5.html#services" class="btn-outline-white">Наши услуги</a>
+            </div>
+          </div>
+          <div class="cta-right">
+            <div>
+              <div class="contact-label">Форма обратной связи</div>
+              <div class="contact-form-fields">
+                <input class="form-field" type="text" placeholder="Имя и компания" />
+                <input class="form-field" type="text" placeholder="Телефон или e-mail" />
+                <textarea class="form-field" rows="3" placeholder="Кратко о задаче"></textarea>
+                <button class="form-submit">Отправить заявку</button>
+              </div>
+            </div>
+            <div class="contact-divider"></div>
+            <div>
+              <div class="contact-label">Электронная почта</div>
+              <div class="contact-email">info@arianna.ru</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-logo">АРИАННА</div>
+      <div class="footer-note">© 2026 АРИАННА. Надёжный партнёр в сопровождении бизнеса</div>
+      <div class="footer-links">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#contact">Контакты</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── CALCULATOR LOGIC ── */
+    const opsMap = [
+      { label: 'до 10 операций',  osno: 20000, usn15: 20000, usn6: 15000 },
+      { label: 'до 20 операций',  osno: 25000, usn15: 25000, usn6: 20000 },
+      { label: 'до 30 операций',  osno: 30000, usn15: 30000, usn6: 25000 },
+      { label: 'до 50 операций',  osno: 40000, usn15: 40000, usn6: 35000 },
+      { label: 'до 100 операций', osno: 65000, usn15: 65000, usn6: 60000 },
+      { label: 'до 200 операций', osno: 115000, usn15: 115000, usn6: 110000 },
+      { label: 'до 300 операций', osno: 140000, usn15: 140000, usn6: 135000 },
+      { label: 'до 500 операций', osno: 190000, usn15: 190000, usn6: 185000 },
+      { label: 'до 700 операций', osno: 240000, usn15: 240000, usn6: 235000 },
+      { label: 'до 900 операций', osno: 290000, usn15: 290000, usn6: 285000 },
+      { label: 'свыше 900',       osno: null, usn15: null, usn6: null },
+    ];
+
+    const empRates = { '0': 0, '10': 2000, '30': 1500, '50': 1000, '51': 850 };
+    const empCounts = { '10': 10, '30': 25, '50': 40, '51': 55 };
+
+    let selectedTax = 'osno';
+    let selectedEmp = '0';
+
+    // Tax buttons
+    document.querySelectorAll('[data-tax]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-tax]').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedTax = btn.dataset.tax;
+        recalc();
+      });
+    });
+
+    // Emp buttons
+    document.querySelectorAll('[data-emp]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-emp]').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedEmp = btn.dataset.emp;
+        recalc();
+      });
+    });
+
+    // Slider
+    const slider = document.getElementById('opsSlider');
+    slider.addEventListener('input', () => { recalc(); });
+
+    function fmt(n) {
+      return n.toLocaleString('ru-RU') + ' ₽';
+    }
+
+    function recalc() {
+      const idx = parseInt(slider.value);
+      const row = opsMap[idx];
+      document.getElementById('opsValue').textContent = row.label;
+
+      const baseVal = row[selectedTax];
+      const resAccEl = document.getElementById('resAccounting');
+
+      if (baseVal === null) {
+        resAccEl.textContent = 'Инд. условия';
+        resAccEl.classList.add('inactive');
+        document.getElementById('resTotal').textContent = 'По запросу';
+        document.getElementById('resPayroll').textContent = selectedEmp === '0' ? '—' : 'Инд. условия';
+        document.getElementById('resCoeffs').textContent = '—';
+        return;
+      }
+      resAccEl.classList.remove('inactive');
+      resAccEl.textContent = fmt(baseVal);
+
+      // Payroll
+      let payroll = 0;
+      const resPayEl = document.getElementById('resPayroll');
+      if (selectedEmp === '0') {
+        resPayEl.textContent = '—';
+        resPayEl.classList.add('inactive');
+      } else {
+        payroll = empRates[selectedEmp] * empCounts[selectedEmp];
+        resPayEl.textContent = fmt(payroll);
+        resPayEl.classList.remove('inactive');
+      }
+
+      // Coefficients
+      let totalPct = 0;
+      document.querySelectorAll('#coeffsGroup input[type="checkbox"]:checked').forEach(cb => {
+        totalPct += parseInt(cb.dataset.pct);
+      });
+      const coeffAdd = Math.round(baseVal * totalPct / 100);
+      const resCoeffEl = document.getElementById('resCoeffs');
+      if (totalPct === 0) {
+        resCoeffEl.textContent = '—';
+        resCoeffEl.classList.add('inactive');
+      } else {
+        resCoeffEl.textContent = '+' + fmt(coeffAdd) + ' (' + totalPct + '%)';
+        resCoeffEl.classList.remove('inactive');
+      }
+
+      const total = baseVal + payroll + coeffAdd;
+      document.getElementById('resTotal').textContent = fmt(total);
+    }
+
+    recalc();
+
+    /* ── TABS ── */
+    function showTab(id) {
+      document.querySelectorAll('.price-table-wrap').forEach(el => el.clas
