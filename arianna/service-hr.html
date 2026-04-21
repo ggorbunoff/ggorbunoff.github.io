@@ -39,6 +39,42 @@
     .breadcrumb-sep { color: var(--light); }
     .breadcrumb-current { color: var(--black); }
 
+    .service-page-badge {
+      position: fixed;
+      top: 96px;
+      right: max(24px, calc((100vw - var(--max)) / 2 + 24px));
+      z-index: 90;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border: 1px solid var(--light);
+      background: rgba(250,250,250,0.92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 40px rgba(10,10,10,0.08);
+      max-width: 280px;
+    }
+    .service-page-badge::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--black);
+      flex-shrink: 0;
+    }
+    .service-page-badge-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 4px;
+    }
+    .service-page-badge-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
     /* ── HERO ── */
     .hero { border-bottom: 1px solid var(--light); overflow: hidden; }
     .hero-grid { display: grid; grid-template-columns: 1fr 360px; min-height: 68vh; }
@@ -76,10 +112,10 @@
     .services-section .section-head p { font-size: 17px; color: var(--mid); line-height: 1.6; }
 
     .service-items { display: flex; flex-direction: column; gap: 1px; background: var(--light); }
-    .service-item { background: var(--white); display: grid; grid-template-columns: 56px 1fr 1fr 64px; gap: 0; transition: background 0.15s; }
+    .service-item { background: var(--white); display: grid; grid-template-columns: 56px 1fr 80px; gap: 0; transition: background 0.15s; }
     .service-item:hover { background: var(--lighter); }
     .service-item-num { font-size: 12px; font-weight: 700; color: var(--mid); letter-spacing: 0.08em; padding: 40px 0 40px 32px; border-right: 1px solid var(--light); }
-    .service-item-main { padding: 40px 48px 40px 40px; border-right: 1px solid var(--light); }
+    .service-item-main { padding: 40px 56px 40px 40px; }
     .service-item-main h3 { font-size: 20px; margin-bottom: 12px; }
     .service-item-main p { font-size: 16px; color: var(--mid); line-height: 1.65; max-width: 46ch; }
     .service-item-includes { padding: 40px; border-right: 1px solid var(--light); }
@@ -87,9 +123,6 @@
     .service-item-includes ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .service-item-includes ul li { font-size: 15px; color: var(--mid); display: flex; align-items: flex-start; gap: 10px; line-height: 1.45; }
     .service-item-includes ul li::before { content: '—'; color: var(--light); flex-shrink: 0; }
-    .service-item-arrow { display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--light); font-size: 20px; transition: color 0.15s, transform 0.15s; border: none; background: none; width: 100%; height: 100%; min-height: 80px; }
-    .service-item:hover .service-item-arrow { color: var(--black); transform: translateX(3px); }
-
     /* ── RESULTS ── */
     .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--light); margin-top: 48px; }
     .result-card { background: var(--white); padding: 36px 28px; display: flex; flex-direction: column; gap: 14px; }
@@ -108,6 +141,35 @@
     .pricer-banner { background: var(--lighter); border: 1px solid var(--light); padding: 48px 56px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
     .pricer-banner-left h3 { font-size: 26px; margin-bottom: 12px; }
     .pricer-banner-left p { font-size: 17px; color: var(--mid); max-width: 52ch; line-height: 1.6; }
+
+
+    /* ── ACCORDION ── */
+    .service-item-arrow {
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--black); font-size: 22px;
+      transition: transform 0.25s; border: none; background: none;
+      width: 100%; height: 100%; min-height: 80px;
+      transform: rotate(90deg);
+    }
+    .service-item-arrow.open { transform: rotate(270deg); }
+    .service-item-expanded {
+      background: var(--lighter);
+      border-bottom: 1px solid var(--light);
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .service-item-expanded ul {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0;
+      padding: 0 40px 0 calc(56px + 40px);
+    }
+    .service-item-expanded ul li {
+      font-size: 15px; color: var(--mid);
+      padding: 12px 0; border-bottom: 1px solid var(--light);
+      display: flex; align-items: flex-start; gap: 10px; line-height: 1.45;
+    }
+    .service-item-expanded ul li:last-child { border-bottom: none; }
+    .service-item-expanded ul li::before { content: "—"; color: var(--light); flex-shrink: 0; }
 
     /* ── MODAL ── */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1000; align-items: center; justify-content: center; padding: 24px; }
@@ -159,10 +221,11 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
+      .service-page-badge { display: none; }
       .hero-grid { grid-template-columns: 1fr; min-height: auto; }
       .hero-left { border-right: none; border-bottom: 1px solid var(--light); padding: 48px 0; }
       .hero-right { min-height: 280px; }
-      .service-item { grid-template-columns: 48px 1fr 56px; }
+      .service-item { grid-template-columns: 48px 1fr 64px; }
       .service-item-includes { display: none; }
       .results-grid { grid-template-columns: 1fr 1fr; }
       .steps-grid { grid-template-columns: 1fr 1fr; }
@@ -178,7 +241,7 @@
       .results-grid, .steps-grid { grid-template-columns: 1fr; }
       .hero-stats { flex-direction: column; gap: 20px; }
       .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .service-item { grid-template-columns: 40px 1fr 48px; }
+      .service-item { grid-template-columns: 40px 1fr 56px; }
       .service-item-num { padding: 28px 0 28px 20px; }
       .service-item-main { padding: 28px 20px; }
     }
@@ -197,6 +260,7 @@
         <li><a href="index.html#about">О компании</a></li>
         <li><a href="index.html#services" class="active">Услуги</a></li>
         <li><a href="pricer.html">Прейскурант</a></li>
+        <li><a href="partners.html">Партнёрам</a></li>
         <li><a href="contacts.html">Контакты</a></li>
       </ul>
       <a href="#contact" class="nav-cta">Оставить заявку</a>
@@ -214,13 +278,20 @@
     </div>
   </div>
 
+  <div class="service-page-badge" aria-hidden="true">
+    <div>
+      <div class="service-page-badge-label">Направление</div>
+      <div class="service-page-badge-title">Кадры и аналитика персонала</div>
+    </div>
+  </div>
+
   <!-- HERO -->
   <div class="hero">
     <div class="wrap">
       <div class="hero-grid">
         <div class="hero-left">
           <div>
-            <div class="hero-tag">Направление 02</div>
+            
             <h1>Кадры и аналитика персонала</h1>
             <p class="hero-sub">Берём на себя весь кадровый документооборот, расчёт зарплаты и отчётность по сотрудникам. Вы управляете командой — мы следим за правильным оформлением каждого процесса.</p>
             <div class="hero-cta-row">
@@ -245,7 +316,7 @@
         </div>
 
         <div class="hero-right">
-          <div class="hero-right-label">Что входит в направление</div>
+          <div class="hero-right-label">Популярные услуги</div>
           <ul class="hero-right-list">
             <li>Кадровый документооборот</li>
             <li>Расчёт зарплаты и налогов с ФОТ</li>
@@ -274,109 +345,99 @@
 
         <div class="service-items">
 
-          <!-- 1 -->
           <div class="service-item">
             <div class="service-item-num">01</div>
             <div class="service-item-main">
               <h3>Кадровый документооборот</h3>
-              <p>Оформляем все кадровые события от приёма до увольнения. Каждый документ — правильной формы, в нужный срок, без ошибок. Работаем в 1С по данным, которые вы предоставляете.</p>
+              <p>Оформляем все кадровые события от приёма до увольнения. Каждый документ — правильной формы, в нужный срок, без ошибок.</p>
             </div>
-            <div class="service-item-includes">
-              <div class="service-item-includes-label">Включает</div>
-              <ul>
+            <button class="service-item-arrow" onclick="toggleItem(this)" aria-expanded="false">&#x203A;</button>
+          </div>
+          <div class="service-item-expanded" hidden>
+            <ul>
                 <li>Приём на работу: приказ, трудовой договор, личная карточка, согласие на обработку персональных данных</li>
                 <li>Увольнение: приказ, расчёт компенсации за отпуск, комплект справок для сотрудника</li>
                 <li>Переводы, изменения условий труда, дополнительные соглашения</li>
                 <li>Оформление отпусков (ежегодных, учебных, по уходу за ребёнком, без сохранения зарплаты)</li>
                 <li>Оформление командировок, штатного расписания, графика отпусков</li>
                 <li>Табель учёта рабочего времени, обязательные приказы по основной деятельности</li>
-              </ul>
-            </div>
-            <button class="service-item-arrow" onclick="openModal('Кадровый документооборот')">→</button>
+            </ul>
           </div>
 
-          <!-- 2 -->
           <div class="service-item">
             <div class="service-item-num">02</div>
             <div class="service-item-main">
               <h3>Расчёт зарплаты и налогов с ФОТ</h3>
-              <p>Точный расчёт всех выплат сотрудникам строго в срок. Начисляем зарплату, отпускные, больничные и командировочные, рассчитываем НДФЛ и страховые взносы, формируем платёжные документы.</p>
+              <p>Точный расчёт всех выплат сотрудникам строго в срок. Начисляем зарплату, отпускные, больничные и командировочные, рассчитываем НДФЛ и страховые взносы.</p>
             </div>
-            <div class="service-item-includes">
-              <div class="service-item-includes-label">Включает</div>
-              <ul>
+            <button class="service-item-arrow" onclick="toggleItem(this)" aria-expanded="false">&#x203A;</button>
+          </div>
+          <div class="service-item-expanded" hidden>
+            <ul>
                 <li>Начисление зарплаты, премий, надбавок и доплат</li>
                 <li>Расчёт отпускных, больничных, пособий по беременности и родам</li>
                 <li>Расчёт командировочных и компенсаций при увольнении</li>
                 <li>Расчёт НДФЛ и страховых взносов (СФР, ОМС)</li>
                 <li>Подготовка расчётных листков и платёжных ведомостей</li>
                 <li>Расчёты по договорам ГПХ, справки 2-НДФЛ по запросу сотрудника</li>
-              </ul>
-            </div>
-            <button class="service-item-arrow" onclick="openModal('Расчёт зарплаты и налогов с ФОТ')">→</button>
+            </ul>
           </div>
 
-          <!-- 3 -->
           <div class="service-item">
             <div class="service-item-num">03</div>
             <div class="service-item-main">
               <h3>Отчётность в СФР и ФНС</h3>
-              <p>Готовим и сдаём всю обязательную кадровую отчётность в установленные сроки. Следим за изменениями форм и законодательства — вы не пропустите ни одной обязательной сдачи.</p>
+              <p>Готовим и сдаём всю обязательную кадровую отчётность в установленные сроки. Следим за изменениями форм и законодательства.</p>
             </div>
-            <div class="service-item-includes">
-              <div class="service-item-includes-label">Включает</div>
-              <ul>
+            <button class="service-item-arrow" onclick="toggleItem(this)" aria-expanded="false">&#x203A;</button>
+          </div>
+          <div class="service-item-expanded" hidden>
+            <ul>
                 <li>ЕФС-1 в СФР: сведения о трудовой деятельности (при приёме, увольнении, переводе)</li>
                 <li>Годовой ЕФС-1: сведения о стаже сотрудников</li>
                 <li>Персонифицированные сведения о физических лицах в ФНС (ежемесячно)</li>
                 <li>Подготовка и сдача отчётов в Центр занятости (ЦЗН)</li>
                 <li>Корректирующие отчёты при выявлении ошибок по инициативе клиента</li>
-              </ul>
-            </div>
-            <button class="service-item-arrow" onclick="openModal('Отчётность в СФР и ФНС')">→</button>
+            </ul>
           </div>
 
-          <!-- 4 -->
           <div class="service-item">
             <div class="service-item-num">04</div>
             <div class="service-item-main">
               <h3>Воинский учёт</h3>
-              <p>Ведём воинский учёт сотрудников в соответствии с требованиями законодательства. Готовим необходимые документы и обеспечиваем взаимодействие с военными комиссариатами без вашего личного участия.</p>
+              <p>Ведём воинский учёт сотрудников в соответствии с требованиями законодательства. Готовим необходимые документы без вашего личного участия.</p>
             </div>
-            <div class="service-item-includes">
-              <div class="service-item-includes-label">Включает</div>
-              <ul>
+            <button class="service-item-arrow" onclick="toggleItem(this)" aria-expanded="false">&#x203A;</button>
+          </div>
+          <div class="service-item-expanded" hidden>
+            <ul>
                 <li>Постановка системы воинского учёта с нуля или проверка существующей</li>
                 <li>Ведение карточек воинского учёта (форма Т-2) по каждому военнообязанному</li>
                 <li>Подготовка документов для военного комиссариата без личного присутствия</li>
                 <li>Уведомления о приёме и увольнении военнообязанных сотрудников</li>
                 <li>Уведомления в МВД о заключении и расторжении договоров с иностранными гражданами</li>
-              </ul>
-            </div>
-            <button class="service-item-arrow" onclick="openModal('Воинский учёт')">→</button>
+            </ul>
           </div>
 
-          <!-- 5 -->
           <div class="service-item">
             <div class="service-item-num">05</div>
             <div class="service-item-main">
               <h3>Аналитика персонала</h3>
-              <p>Готовим управленческие отчёты по команде: численность, текучесть, структура ФОТ, остатки отпусков. Данные, которые помогают принимать кадровые решения — без ручной обработки с вашей стороны.</p>
+              <p>Готовим управленческие отчёты по команде: численность, текучесть, структура ФОТ, остатки отпусков.</p>
             </div>
-            <div class="service-item-includes">
-              <div class="service-item-includes-label">Включает</div>
-              <ul>
+            <button class="service-item-arrow" onclick="toggleItem(this)" aria-expanded="false">&#x203A;</button>
+          </div>
+          <div class="service-item-expanded" hidden>
+            <ul>
                 <li>Отчёты по численности и структуре персонала</li>
                 <li>Анализ текучести кадров за период</li>
                 <li>Структура и динамика ФОТ (фонд оплаты труда)</li>
                 <li>Остатки и использование отпусков по сотрудникам</li>
                 <li>Отчёты по окладам, надбавкам и изменениям условий оплаты</li>
-              </ul>
-            </div>
-            <button class="service-item-arrow" onclick="openModal('Аналитика персонала')">→</button>
+            </ul>
           </div>
 
-        </div>
+        </div></div>
       </div>
     </section>
 
@@ -414,25 +475,20 @@
     <section id="how">
       <div class="wrap">
         <div class="section-label">Как мы работаем</div>
-        <h2>Четыре шага до старта</h2>
+        <h2>Три шага до старта</h2>
         <div class="steps-grid">
           <article class="step-card">
             <div class="step-num">01</div>
-            <h3>Заявка и знакомство</h3>
-            <p>Вы оставляете заявку, мы связываемся и уточняем численность сотрудников, текущее состояние кадрового учёта и задачи.</p>
+            <h3>Заявка и первичный анализ</h3>
+            <p>Оставляете заявку, мы связываемся, уточняем численность сотрудников и состояние кадрового учёта — и сразу предлагаем решение.</p>
           </article>
           <article class="step-card">
             <div class="step-num">02</div>
-            <h3>Аудит кадрового учёта</h3>
-            <p>Проверяем текущие документы, выявляем ошибки и риски, оцениваем объём работы и готовим предложение.</p>
-          </article>
-          <article class="step-card">
-            <div class="step-num">03</div>
             <h3>Договор и передача дел</h3>
             <p>Подписываем договор с NDA, получаем доступ к необходимым системам и выстраиваем формат регулярного взаимодействия.</p>
           </article>
           <article class="step-card">
-            <div class="step-num">04</div>
+            <div class="step-num">03</div>
             <h3>Постоянное сопровождение</h3>
             <p>Ведём кадровый учёт, рассчитываем зарплату и сдаём отчётность. Вы получаете готовые документы и отчёты.</p>
           </article>
@@ -466,10 +522,10 @@
               </div>
               <h2>Передайте кадровый учёт профессионалам</h2>
             </div>
-            <p class="cta-tagline">Оставьте заявку — мы свяжемся в течение рабочего дня, проведём бесплатный аудит кадровых документов и предложим подходящий формат сотрудничества.</p>
+            <p class="cta-tagline">Оставьте заявку — мы свяжемся с вами, проведём бесплатный аудит кадровых документов и предложим подходящий формат сотрудничества.</p>
             <div class="cta-buttons">
               <a href="mailto:info@arianna.ru" class="btn-white">Написать на почту</a>
-              <a href="index_v2-5.html#services" class="btn-outline-white">Другие направления</a>
+              <a href="index.html#services" class="btn-outline-white">Другие направления</a>
             </div>
           </div>
           <div class="cta-right">
@@ -505,24 +561,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- MODAL -->
-  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-    <div class="modal">
-      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
-      <div class="modal-tag">Получить консультацию</div>
-      <div class="modal-title" id="modalTitle"></div>
-      <div class="modal-divider"></div>
-      <div class="modal-fields">
-        <input class="modal-field" type="text" placeholder="Имя и компания" />
-        <input class="modal-field" type="text" placeholder="Телефон или e-mail" />
-        <textarea class="modal-field" rows="3" placeholder="Кратко опишите задачу (необязательно)"></textarea>
-        <button class="modal-submit">Получить консультацию</button>
-        <p class="modal-note">Ответим в течение рабочего дня. Консультация — бесплатно.</p>
-      </div>
-    </div>
-  </div>
-
   <script>
     function openModal(title) {
       document.getElementById('modalTitle').textContent = title;
